@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Steve Mitchel — Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #faf9f7;
+    --surface: #ffffff;
+    --border: #e8e5e0;
+    --text: #1a1916;
+    --muted: #6b6862;
+    --accent: #1a1916;
+    --tag-bg: #f0ede8;
+    --tag-text: #3d3b37;
+    --green: #2d6a4f;
+    --green-bg: #d8f3dc;
+    --blue: #1d4e89;
+    --blue-bg: #dbeafe;
+    --amber: #92400e;
+    --amber-bg: #fef3c7;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(250,249,247,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* SECTIONS */
+  section { padding: 6rem 2rem; max-width: 960px; margin: 0 auto; }
+
+  /* HERO */
+  .hero {
+    padding-top: 140px;
+    padding-bottom: 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .hero-left {}
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--muted);
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+    line-height: 1.1;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.4rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--muted);
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 400px;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.18s;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+
+  .btn-primary {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .btn-primary:hover { background: #333; }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+  }
+
+  .btn-secondary:hover { border-color: #bbb; background: var(--surface); }
+
+  /* HERO RIGHT — stats */
+  .hero-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem;
+  }
+
+  .stat-card:first-child {
+    grid-column: span 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 1rem 1.4rem;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    flex-shrink: 0;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* SECTION HEADERS */
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--muted);
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-sub {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 3rem;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 1rem;
+    line-height: 1.8;
+  }
+
+  .about-text p:last-child { margin-bottom: 0; }
+
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .skill-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+
+  .skill-group-title {
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+    margin: 1.2rem 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    gap: 1.2rem;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.8rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: start;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-card:hover {
+    border-color: #c0bdb8;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+
+  .project-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-type.game { color: var(--green); }
+  .project-type.tool { color: var(--blue); }
+  .project-type.utility { color: var(--amber); }
+
+  .project-card h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .project-card p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 1rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .project-tag {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .project-arrow {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    transition: all 0.2s;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+
+  .project-card:hover .project-arrow {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  /* FEATURED badge */
+  .feat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  .feat-badge.green { background: var(--green-bg); color: var(--green); }
+  .feat-badge.blue { background: var(--blue-bg); color: var(--blue); }
+  .feat-badge.amber { background: var(--amber-bg); color: var(--amber); }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 2.5rem; }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 2rem;
+  }
+
+  .exp-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    padding-top: 2px;
+  }
+
+  .exp-right h3 {
+    font-weight: 500;
+    font-size: 1rem;
+    margin-bottom: 2px;
+  }
+
+  .exp-right .exp-company {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 0.6rem;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .exp-right p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* CONTACT */
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-links { display: flex; flex-direction: column; gap: 12px; }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--surface);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.18s;
+  }
+
+  .contact-link:hover {
+    border-color: #bbb;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+
+  .contact-link-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--tag-bg);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+  }
+
+  .contact-link-text { flex: 1; }
+  .contact-link-sub {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .contact-note {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  .contact-note h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+  }
+
+  .contact-note p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 1.2rem;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* SCROLL FADE IN */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 720px) {
+    .hero, .about-grid, .contact-wrap { grid-template-columns: 1fr; gap: 2rem; }
+    .hero { padding-top: 100px; }
+    .hero-right { grid-template-columns: 1fr 1fr; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.3rem; }
+    nav { padding: 0 1rem; }
+    section { padding: 4rem 1.2rem; }
+    .project-card { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">steve.mitchel</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="max-width:960px; margin:0 auto;">
+  <div class="hero-left fade-up">
+    <p class="hero-eyebrow">Full Stack Developer</p>
+    <h1>Building things<br />for <em>the web</em></h1>
+    <p class="hero-desc">
+      I'm Steve — a full stack developer who loves building interactive,
+      word-based games and developer tools. I care about clean code,
+      fast interfaces, and delightful user experiences.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+    </div>
+  </div>
+
+  <div class="hero-right fade-up" style="transition-delay:0.12s;">
+    <div class="stat-card">
+      <div class="status-dot"></div>
+      <span style="font-size:13px; color:var(--muted);">Available for freelance work</span>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">3+</div>
+      <div class="stat-label">Projects shipped</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">2yrs</div>
+      <div class="stat-label">Experience</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">∞</div>
+      <div class="stat-label">Words unscrambled</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">JS</div>
+      <div class="stat-label">Primary stack</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="fade-up">
+    <p class="section-label">About</p>
+    <h2>Who I am</h2>
+    <p class="section-sub">A developer who thinks in systems and builds with purpose.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-text fade-up" style="transition-delay:0.1s;">
+      <p>
+        I'm a full stack developer with a focus on interactive web applications.
+        My work lives at the intersection of language, logic, and interface design —
+        which is why word games and text-processing tools have become my specialty.
+      </p>
+      <p>
+        I enjoy working on both the client and server side, building systems
+        that feel fast, reliable, and intuitive. Every project I ship is
+        carefully considered from architecture to animation.
+      </p>
+      <p>
+        When I'm not coding, I'm probably solving a crossword or reading
+        about linguistics.
+      </p>
+    </div>
+    <div class="fade-up" style="transition-delay:0.18s;">
+      <div class="skill-group-title">Frontend</div>
+      <div class="skills-list">
+        <span class="skill-tag">HTML5</span>
+        <span class="skill-tag">CSS3</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">React</span>
+        <span class="skill-tag">TypeScript</span>
+      </div>
+      <div class="skill-group-title">Backend</div>
+      <div class="skills-list">
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">Express</span>
+        <span class="skill-tag">REST APIs</span>
+        <span class="skill-tag">MongoDB</span>
+        <span class="skill-tag">PostgreSQL</span>
+      </div>
+      <div class="skill-group-title">Tools & Workflow</div>
+      <div class="skills-list">
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">Netlify</span>
+        <span class="skill-tag">Vercel</span>
+        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">Figma</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="fade-up">
+    <p class="section-label">Projects</p>
+    <h2>What I've built</h2>
+    <p class="section-sub">Interactive word games and developer utilities.</p>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- Wordle -->
+    <a href="#" class="project-card fade-up" style="transition-delay:0.08s;">
+      <div>
+        <div class="project-type game">Game</div>
+        <h3>
+          Wordle Unlimited
+          <span class="feat-badge green">Live</span>
+        </h3>
+        <p>
+          Play Wordle as many times as you want — no daily limit. Features unlimited
+          random word rounds, local streak tracking, hard mode, and smooth flip animations.
+          Responsive on all screen sizes with keyboard and on-screen input support.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag">JavaScript</span>
+          <span class="project-tag">CSS Animations</span>
+          <span class="project-tag">LocalStorage</span>
+          <span class="project-tag">Word API</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </a>
+
+    <!-- Crossword Solver -->
+    <a href="#" class="project-card fade-up" style="transition-delay:0.14s;">
+      <div>
+        <div class="project-type tool">Tool</div>
+        <h3>
+          Crossword Solver
+          <span class="feat-badge blue">Live</span>
+        </h3>
+        <p>
+          A smart crossword solver that uses pattern matching against a 170k+ word
+          dictionary. Enter known letters and blanks, get instant results filtered
+          by length. Supports wildcard patterns and clue hints.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag">React</span>
+          <span class="project-tag">Node.js</span>
+          <span class="project-tag">REST API</span>
+          <span class="project-tag">Regex</span>
+          <span class="project-tag">Dictionary DB</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </a>
+
+    <!-- Unscramble It -->
+    <a href="#" class="project-card fade-up" style="transition-delay:0.2s;">
+      <div>
+        <div class="project-type utility">Utility</div>
+        <h3>
+          Unscramble It
+          <span class="feat-badge amber">Live</span>
+        </h3>
+        <p>
+          An anagram and word unscrambler that generates all valid English words
+          from a set of letters. Built with a Trie data structure for lightning-fast
+          lookups. Includes filtering by word length and difficulty score.
+        </p>
+        <div class="project-tags">
+          <span class="project-tag">JavaScript</span>
+          <span class="project-tag">Trie DSA</span>
+          <span class="project-tag">Algorithm Design</span>
+          <span class="project-tag">Performance</span>
+        </div>
+      </div>
+      <div class="project-arrow">↗</div>
+    </a>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="fade-up">
+    <p class="section-label">Experience</p>
+    <h2>Where I've worked</h2>
+    <p class="section-sub">A short but focused career building for the web.</p>
+  </div>
+
+  <div class="exp-list">
+    <div class="exp-item fade-up" style="transition-delay:0.1s;">
+      <div class="exp-period">2023 — Present</div>
+      <div class="exp-right">
+        <h3>Full Stack Developer — Freelance</h3>
+        <div class="exp-company">Self-employed · Remote</div>
+        <p>
+          Building custom web applications, word games, and developer tools for
+          clients and as personal projects. Handling full product lifecycle from
+          design to deployment on Netlify and Vercel.
+        </p>
+      </div>
+    </div>
+    <div class="exp-item fade-up" style="transition-delay:0.18s;">
+      <div class="exp-period">2022 — 2023</div>
+      <div class="exp-right">
+        <h3>Junior Web Developer</h3>
+        <div class="exp-company">Tech Studio · Contract</div>
+        <p>
+          Developed and maintained frontend interfaces using React. Collaborated
+          with backend engineers on REST API integration. Worked in agile sprints
+          and contributed to code reviews.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="fade-up">
+    <p class="section-label">Contact</p>
+    <h2>Let's work together</h2>
+    <p class="section-sub">Open to freelance projects and full-time opportunities.</p>
+  </div>
+
+  <div class="contact-wrap">
+    <div class="contact-links fade-up" style="transition-delay:0.1s;">
+      <a href="mailto:steve@example.com" class="contact-link">
+        <div class="contact-link-icon">✉</div>
+        <div class="contact-link-text">
+          <div>Email me</div>
+          <div class="contact-link-sub">steve@example.com</div>
+        </div>
+        <span style="color:var(--muted); font-size:14px;">↗</span>
+      </a>
+      <a href="https://github.com/" target="_blank" class="contact-link">
+        <div class="contact-link-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+        </div>
+        <div class="contact-link-text">
+          <div>GitHub</div>
+          <div class="contact-link-sub">github.com/stevemitchel</div>
+        </div>
+        <span style="color:var(--muted); font-size:14px;">↗</span>
+      </a>
+      <a href="https://linkedin.com" target="_blank" class="contact-link">
+        <div class="contact-link-icon">in</div>
+        <div class="contact-link-text">
+          <div>LinkedIn</div>
+          <div class="contact-link-sub">linkedin.com/in/stevemitchel</div>
+        </div>
+        <span style="color:var(--muted); font-size:14px;">↗</span>
+      </a>
+    </div>
+
+    <div class="contact-note fade-up" style="transition-delay:0.18s;">
+      <h3>Currently available</h3>
+      <p>
+        I'm open to freelance projects, contract work, and full-time
+        roles. I especially enjoy building tools, games, and interactive
+        interfaces where performance and design both matter.
+      </p>
+      <p>
+        Response time is usually within 24 hours.
+        Let's build something great together.
+      </p>
+      <a href="mailto:steve@example.com" class="btn btn-primary" style="width:100%; justify-content:center;">
+        Say hello →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Steve Mitchel © 2025</span>
+  <span>Built with care · Deployed on Netlify</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
